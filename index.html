@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#07151b">
+  <meta name="description" content="ECO CITY — تجربة تعليمية تفاعلية لاستكشاف مدينة مستقبلية مستدامة ثلاثية الأبعاد.">
+  <title>ECO CITY | المدينة المستقبلية المستدامة</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <main class="experience" id="experience">
+    <canvas id="city-canvas" aria-label="مشهد ثلاثي الأبعاد تفاعلي لمدينة مستدامة"></canvas>
+
+    <section class="intro" id="intro" aria-label="مقدمة ECO CITY">
+      <div class="intro-copy">
+        <div class="eyebrow"><span class="live-dot"></span> مستقبلٌ أخضر يبدأ من هنا</div>
+        <h1>مدينة تعيش<br>في <span>انسجام</span></h1>
+        <p>رحلة تفاعلية إلى عالمٍ تتنفس فيه التقنية مع الطبيعة.</p>
+        <button class="primary-button" id="enter-city">استكشف المدينة <span aria-hidden="true">←</span></button>
+      </div>
+    </section>
+
+    <header class="topbar" id="topbar" hidden>
+      <a class="brand" href="#" aria-label="ECO CITY">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-name">ECO<span>CITY</span><small>مدينة الغد</small></span>
+      </a>
+      <div class="topbar-center"><span class="status-pulse"></span> محاكاة حيّة <span class="topbar-divider">/</span> <span id="clock-label">الآن · نهار</span></div>
+      <div class="topbar-actions">
+        <button class="icon-button" id="dashboard-toggle" type="button" aria-controls="dashboard" aria-expanded="false" aria-label="إظهار لوحة التحكم" title="إظهار لوحة التحكم"><span aria-hidden="true">☷</span></button>
+        <button class="icon-button" id="help-button" type="button" title="دليل الاستكشاف" aria-label="دليل الاستكشاف">?</button>
+      </div>
+    </header>
+
+    <aside class="dashboard" id="dashboard" hidden aria-label="لوحة التحكم">
+      <div class="panel-heading">
+        <div><div class="section-kicker">مركز التحكم</div><h2>نبض المدينة</h2></div>
+        <span class="live-label"><span class="live-dot"></span> مباشر</span>
+      </div>
+
+      <div class="metric-grid">
+        <article class="metric-card"><span class="metric-icon leaf-icon">↗</span><span class="metric-label">طاقة نظيفة</span><strong id="clean-energy">78<span>%</span></strong><div class="metric-track"><i id="energy-bar"></i></div></article>
+        <article class="metric-card"><span class="metric-icon co2-icon">CO₂</span><span class="metric-label">انبعاثات اليوم</span><strong id="emissions">2.4<span> طن</span></strong><small class="metric-note">↓ 18% عن الأمس</small></article>
+        <article class="metric-card"><span class="metric-icon tree-icon">♧</span><span class="metric-label">غطاء أخضر</span><strong id="green-cover">42<span>%</span></strong><div class="metric-track"><i id="green-bar"></i></div></article>
+        <article class="metric-card"><span class="metric-icon people-icon">◎</span><span class="metric-label">جودة الهواء</span><strong id="air-quality">جيد</strong><small class="metric-note">مؤشر 24 · ممتاز</small></article>
+      </div>
+
+      <div class="control-section">
+        <div class="section-title"><span class="sun-symbol">☼</span><span>الوقت والإضاءة</span><small>اختر أجواء المدينة</small></div>
+        <div class="segmented-control" id="time-control" role="group" aria-label="الوقت">
+          <button data-time="dawn">شروق</button><button data-time="day" class="selected">نهار</button><button data-time="sunset">غروب</button><button data-time="night">ليل</button>
+        </div>
+      </div>
+
+      <div class="control-section weather-section">
+        <div class="section-title"><span class="weather-symbol">☁</span><span>حالة الطقس</span></div>
+        <div class="weather-grid" id="weather-control" role="group" aria-label="حالة الطقس">
+          <button class="weather-option selected" data-weather="sunny"><span>☀</span><small>مشمس</small></button>
+          <button class="weather-option" data-weather="cloudy"><span>☁</span><small>غائم</small></button>
+          <button class="weather-option" data-weather="rainy"><span>☂</span><small>ممطر</small></button>
+          <button class="weather-option" data-weather="foggy"><span>≋</span><small>ضباب</small></button>
+          <button class="weather-option" data-weather="stormy"><span>ϟ</span><small>عاصف</small></button>
+        </div>
+      </div>
+
+      <div class="control-section city-tools">
+        <div class="section-title"><span class="tools-symbol">✳</span><span>طوّر مدينتك</span></div>
+        <div class="tool-buttons">
+          <button class="tool-button" id="add-tree"><span class="tool-icon">♧</span><span>أضف شجرة</span><b>+</b></button>
+          <button class="tool-button" id="upgrade-park"><span class="tool-icon">❋</span><span>طوّر الحدائق</span><b>↗</b></button>
+          <button class="tool-button" id="add-solar"><span class="tool-icon">▦</span><span>ألواح شمسية</span><b>+</b></button>
+          <button class="tool-button" id="add-turbine"><span class="tool-icon">✳</span><span>توربين رياح</span><b>+</b></button>
+        </div>
+      </div>
+
+      <div class="transport-control">
+        <div class="transport-heading"><span class="bus-icon">▰</span><span>النقل المستدام</span><strong id="transport-value">68%</strong></div>
+        <input id="transport-slider" type="range" min="0" max="100" value="68" aria-label="نسبة وسائل النقل المستدامة">
+        <div class="range-labels"><span>مركبات تقليدية</span><span>كهربائية</span></div>
+      </div>
+      <div class="panel-footer"><span class="footer-spark">✳</span> كل تغيير يصنع فرقًا</div>
+    </aside>
+
+    <div class="scene-label" id="scene-label" hidden>
+      <span class="scene-label-dot"></span>
+      <div><strong>وادي النور</strong><small>مدينة مستدامة · السعودية</small></div>
+      <span class="coordinates">24°42′ N&nbsp; 46°40′ E</span>
+    </div>
+    <div class="camera-hint" id="camera-hint" hidden><span>اسحب لتدوير المشهد</span><i></i><span>عجلة للتقريب</span></div>
+    <button class="reset-camera" id="reset-camera" hidden aria-label="إعادة الكاميرا إلى الوضع الأصلي" title="إعادة الكاميرا">⌖</button>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <section class="info-card" id="info-card" hidden aria-live="polite">
+      <button class="close-info" id="close-info" aria-label="إغلاق">×</button>
+      <div class="info-category" id="info-category">عن المدينة</div>
+      <h3 id="info-title">اكتشف المدينة</h3>
+      <p id="info-description"></p>
+      <div class="info-fact"><span>✳</span><span id="info-fact"></span></div>
+    </section>
+
+    <section class="guide-modal" id="guide-modal" hidden>
+      <button class="close-info" id="close-guide" aria-label="إغلاق">×</button>
+      <div class="section-kicker">دليلك للمدينة</div><h2>استكشف، تفاعل، وتعلّم</h2>
+      <div class="guide-items">
+        <p><span>01</span> اسحب المشهد لتدوير الكاميرا، واستخدم عجلة الفأرة للتقريب والتبعيد.</p>
+        <p><span>02</span> انقر على المباني والعناصر لمعرفة دورها في المدينة المستدامة.</p>
+        <p><span>03</span> غيّر الوقت والطقس، وأضف عناصر خضراء لمشاهدة أثرها على المؤشرات.</p>
+        <p><span>04</span> انقر في مساحة فارغة لوضع الأشجار والألواح والتوربينات.</p>
+      </div>
+      <button class="primary-button guide-done" id="guide-done">لنبدأ الاستكشاف <span>←</span></button>
+    </section>
+
+    <footer class="credits" id="credits" hidden>
+      <div class="credits-heading"><span class="credits-rule"></span> الملكية الفكرية <span class="credits-year">ECO CITY · 2026</span></div>
+      <div class="credits-owner">
+        <p class="credits-name"><span>المهندسة :</span><strong>غزلان المشعوف</strong></p>
+      </div>
+      <div class="credits-details">
+        <div class="credits-meta"><span>الصف</span><strong>ثالث ثانوي / 8</strong></div>
+        <div class="credits-rights">جميع الحقوق محفوظة <span>©</span> 2026</div>
+      </div>
+    </footer>
+  </main>
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
