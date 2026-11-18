@@ -54,7 +54,7 @@ controls.maxPolarAngle = Math.PI * 0.485;
 controls.target.set(0, 3, 0);
 
 const city = new THREE.Group();
-city.visible = false;
+city.visible = true;
 scene.add(city);
 const introGroup = new THREE.Group();
 scene.add(introGroup);
@@ -540,7 +540,6 @@ function enterCity() {
   cityEntered = true;
   transitionStart = clock.elapsedTime;
   transitionFrom.copy(camera.position);
-  city.visible = true;
   introGroup.visible = false;
   intro.classList.add("leaving");
   ui.topbar.hidden = false;
@@ -800,3 +799,4 @@ window.addEventListener("resize", () => {
 
 updateMetrics();
 animate();
+window.setTimeout(enterCity, 900);
