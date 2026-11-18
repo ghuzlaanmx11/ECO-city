@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./styles.css?v=20261118-1">
   <script type="importmap">
     {
       "imports": {
@@ -22,6 +22,10 @@
 <body>
   <main class="experience" id="experience">
     <canvas id="city-canvas" aria-label="مشهد ثلاثي الأبعاد تفاعلي لمدينة مستدامة"></canvas>
+    <div class="module-error" id="module-error" hidden role="alert">
+      <strong>تعذّر تحميل مشهد المدينة</strong>
+      <span>تحقق من اتصال الإنترنت وإمكانية الوصول إلى مكتبات Three.js، ثم أعد تحميل الصفحة.</span>
+    </div>
 
     <section class="intro" id="intro" aria-label="مقدمة ECO CITY">
       <div class="intro-copy">
@@ -133,6 +137,12 @@
       </div>
     </footer>
   </main>
-  <script type="module" src="./src/main.js"></script>
+  <script id="eco-city-app" type="module" src="./src/main.js?v=20261118-1"></script>
+  <script>
+    document.querySelector("#eco-city-app").addEventListener("error", () => {
+      const errorMessage = document.querySelector("#module-error");
+      if (errorMessage) errorMessage.hidden = false;
+    });
+  </script>
 </body>
 </html>
